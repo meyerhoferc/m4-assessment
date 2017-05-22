@@ -13,9 +13,30 @@ describe 'user log in' do
     fill_in('session[email]', with: 'email@email.com')
     fill_in('session[password]', with: 'password')
     click_on 'Log In'
-    save_and_open_page
+
     within('.success') do
       expect(page).to have_content('Successfully logged in as email@email.com')
+    end
+  end
+
+  it 'cannot login with invalid credentials' do
+    User.create!(email: 'email@email.com', password: 'password')
+    visit login_path
+
+    fill_in('session[email]', with: 'email@email.com')
+    fill_in('session[password]', with: 'other-password')
+    click_on 'Log In'
+
+    within('.danger') do
+      expect(page).to have_content('Invalid login credentials')
+    end
+
+    fill_in('session[email]', with: 'other-email@email.com')
+    fill_in('session[password]', with: 'password')
+    click_on 'Log In'
+
+    within('.danger') do
+      expect(page).to have_content('Invalid login credentials')
     end
   end
 end
