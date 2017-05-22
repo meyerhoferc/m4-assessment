@@ -35,7 +35,7 @@ describe "user account creation" do
     fill_in('user[password]', with: 'password')
     fill_in('user[password_confirmation]', with: 'other-pass')
     click_on 'Sign Up'
-    save_and_open_page
+
     expect(User.count).to eq(0)
     within('.danger') do
       expect(page).to have_content('Password and confirmation must match.')
@@ -48,7 +48,7 @@ describe "user account creation" do
 
     expect(User.count).to eq(0)
     within('.danger') do
-      expect(page).to have_content('You must provide a valid email address for account creation')
+      expect(page).to have_content('You must provide a valid email address for account creation.')
     end
   end
 end

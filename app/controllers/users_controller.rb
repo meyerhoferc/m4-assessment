@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   end
 
   def determine_message
-    return 'Password and confirmation must match.' if user_params[:password] != user_params[:password_confirmation]
+    return 'Password and confirmation must match.' unless user_params[:password] == user_params[:password_confirmation]
+    return 'You must provide a valid email address for account creation.' if user_params[:email] == ''
   end
 end
