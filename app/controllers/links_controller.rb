@@ -9,12 +9,13 @@ class LinksController < ApplicationController
   end
 
   def create
-    link = current_user.links.new(title: link_params[:title], url: link_params[:url])
-    if link.save
+    if Link.is_valid?(link_params[:url]) && current_user.links.create(link_params)
       flash[:success] = 'Link successfully added'
       redirect_to root_path
     else
-      flash[:danger] = 'Not successful'
+      @link = Link.new
+      @links = current_user.links
+      flash[:danger] = 'Invalid link'
       render :index
     end
   end
