@@ -14,7 +14,6 @@ describe "user account creation" do
     visit root_path
     expect(current_path).to eq(authenticate_path)
     click_on 'Sign Up'
-    save_and_open_page
     expect(current_path).to eq(new_user_path)
 
     fill_in('user[email]', with: 'email@email.com')
