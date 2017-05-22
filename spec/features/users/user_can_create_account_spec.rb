@@ -13,6 +13,7 @@ describe "user account creation" do
   it "requires an email and password" do
     visit root_path
     expect(current_path).to eq(authenticate_path)
+    save_and_open_page
     click_on 'Sign Up'
     expect(current_path).to eq(new_user_path)
 
