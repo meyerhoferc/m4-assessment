@@ -1,1 +1,38 @@
 <%= link_to 'Sign Out', logout_path %>
+
+<%= form_for(@link) do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :url %>
+  <%= f.text_field :url %>
+
+  <%= f.submit 'Submit URL' %>
+<% end %>
+
+<div class="links">
+  <table>
+    <thead>
+      <th>Title</th>
+      <th>Link</th>
+      <th>Read?</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <% @links.each do |link| %>
+        <tr>
+          <td><%= link.title %></td>
+          <td>
+            <%= link_to link.url, link.url %>
+          </td>
+          <% if link.read %>
+            <td>Read</td>
+          <% else %>
+            <td>Unread</td>
+          <% end %>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
