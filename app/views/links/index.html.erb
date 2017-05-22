@@ -1,38 +1,45 @@
 <%= link_to 'Sign Out', logout_path %>
+<div class="container">
+  <div class="row">
+    <%= form_for(@link) do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title, class: 'form-control' %>
+      </div>
 
-<%= form_for(@link) do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
+      <div class="form-group">
+        <%= f.label :url %>
+        <%= f.text_field :url, class: 'form-control' %>
+      </div>
 
-  <%= f.label :url %>
-  <%= f.text_field :url %>
+      <%= f.submit 'Submit URL', class: 'btn btn-success' %>
+    <% end %>
 
-  <%= f.submit 'Submit URL' %>
-<% end %>
-
-<div class="links">
-  <table>
-    <thead>
-      <th>Title</th>
-      <th>Link</th>
-      <th>Read?</th>
-      <th>Edit</th>
-    </thead>
-    <tbody>
-      <% @links.each do |link| %>
-        <tr>
-          <td><%= link.title %></td>
-          <td>
-            <%= link_to link.url, link.url %>
-          </td>
-          <% if link.read %>
-            <td>Read</td>
-          <% else %>
-            <td>Unread</td>
+    <div class="links">
+      <table class='table table-striped'>
+        <thead>
+          <th>Title</th>
+          <th>Link</th>
+          <th>Read?</th>
+          <th>Edit</th>
+        </thead>
+        <tbody>
+          <% @links.each do |link| %>
+            <tr>
+              <td><%= link.title %></td>
+              <td>
+                <%= link_to link.url, link.url %>
+              </td>
+              <% if link.read %>
+                <td>Read</td>
+              <% else %>
+                <td>Unread</td>
+              <% end %>
+              <td><%= link_to 'Edit', edit_link_path(link) %></td>
+            </tr>
           <% end %>
-          <td><%= link_to 'Edit', edit_link_path(link) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

@@ -1,9 +1,19 @@
-<%= form_for(@link) do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title %>
+<div class="container">
+  <div class="row">
+    <h1>Edit Link</h1>
 
-  <%= f.label :url %>
-  <%= f.text_field :url %>
+    <%= form_for(@link) do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
 
-  <%= f.submit 'Update Link' %>
-<% end %>
+      <div class="form-group">
+        <%= f.label :url %>
+        <%= f.text_field :url %>
+      </div>
+
+      <%= f.submit 'Update Link', class: 'btn btn-success' %>
+    <% end %>
+  </div>
+</div>
