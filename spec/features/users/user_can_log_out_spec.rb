@@ -14,11 +14,15 @@ describe 'user log out' do
     fill_in('session[password]', with: 'password')
     click_on 'Log In'
 
-    expect(page).to have_link('Logout')
+    expect(page).to have_link('Sign Out')
     expect(page).to_not have_link('Log In')
 
-    click_on 'Logout'
+    click_on 'Sign Out'
 
-    expect(current_path).to eq(root_path)
+    within('.success') do
+      expect(page).to have_content('Successfully logged out')
+    end
+
+    expect(current_path).to eq(authenticate_path)
   end
 end

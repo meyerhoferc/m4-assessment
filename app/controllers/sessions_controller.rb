@@ -14,6 +14,12 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    session.clear
+    flash[:success] = 'Successfully logged out'
+    redirect_to authenticate_path
+  end
+
   private
 
   def session_params
