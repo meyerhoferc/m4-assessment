@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   get 'authenticate', to: 'authenticate#index', as: 'authenticate'
 
-  get 'login', to: 'sessions#new', as: 'login'
+  get 'login', to: 'sessions#new'
+  post 'login', to: 'sessions#create'
 
   resources :users, only: [:new, :create]
 
