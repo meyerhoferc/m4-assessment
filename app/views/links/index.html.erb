@@ -16,7 +16,7 @@
       <th>Title</th>
       <th>Link</th>
       <th>Read?</th>
-      <th>Action</th>
+      <th>Edit</th>
     </thead>
     <tbody>
       <% @links.each do |link| %>
@@ -30,7 +30,7 @@
           <% else %>
             <td>Unread</td>
           <% end %>
-          <td></td>
+          <td><%= link_to 'Edit', edit_link_path(link) %></td>
         </tr>
       <% end %>
     </tbody>

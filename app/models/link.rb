@@ -6,6 +6,6 @@ class Link < ActiveRecord::Base
 
   def self.is_valid?(uri)
     parsed_uri = URI.parse(uri)
-    parsed_uri.class == URI::HTTP && parsed_uri.host && !parsed_uri.host.nil?
+    (parsed_uri.class == URI::HTTP || parsed_uri.class == URI::HTTPS) && parsed_uri.host && !parsed_uri.host.nil?
   end
 end
