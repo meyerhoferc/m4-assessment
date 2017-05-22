@@ -8,6 +8,11 @@
 </head>
 <body>
 <div class="container">
+  <% flash.each do |type, message| %>
+    <div class="<%= type %>">
+      <p><%= sanitize(message) %></p>
+    </div>
+  <% end %>
   <%= yield %>
 </div>
 
