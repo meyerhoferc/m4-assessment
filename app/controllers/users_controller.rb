@@ -10,7 +10,8 @@ class UsersController < ApplicationController
       flash[:success] = "Successfully created account for #{user.email}"
       redirect_to root_path
     else
-      flash[:danger] = "Account creation unsuccessful"
+      @user = User.new
+      flash[:danger] = determine_message
       render :new
     end
   end
@@ -18,6 +19,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :password_confirmation)
+  end
+
+  def determine_message
+    return 'Password and confirmation must match.' if user_params[:password] != user_params[:password_confirmation]
   end
 end
