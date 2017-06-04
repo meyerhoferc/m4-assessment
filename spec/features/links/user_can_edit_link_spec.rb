@@ -27,4 +27,22 @@ describe 'user can edit link' do
       expect(page).to_not have_content('my first link')
     end
   end
+
+  it 'if the link is vaild' do
+    current_user = User.create!(email: 'example@email.com', password: 'password')
+    link = current_user.links.create!(title: 'my first link', url: 'https://news.ycombinator.com/', read: false)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
+    visit root_path
+
+    within('.links') do
+      click_on 'Edit'
+    end
+
+    fill_in('link[url]', with: 'google.c')
+    click_on 'Update Link'
+
+    within('.danger') do
+      expect(page).to have_content('Invalid link')
+    end
+  end
 end
