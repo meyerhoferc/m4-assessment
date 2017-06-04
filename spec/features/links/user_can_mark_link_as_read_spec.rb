@@ -6,14 +6,14 @@ describe 'user can mark link as read' do
     link = current_user.links.create!(title: 'my first link', url: 'https://news.ycombinator.com/', read: false)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
     visit root_path
-
+    save_and_open_page
     within('.links') do
       expect(page).to have_content('Unread')
-      expect(page).to have_link('Mark as Read')
+      expect(page).to have_button('Mark as Read')
     end
 
     within('.links') do
-      click 'Mark as Read'
+      click_on 'Mark as Read'
     end
 
     within('.links') do
