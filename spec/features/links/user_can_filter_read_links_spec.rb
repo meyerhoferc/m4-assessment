@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'a user filters links', :js => :true do
-  it 'can filter by read links' do
+  xit 'can filter by read links' do
     current_user = User.create!(email: 'example@email.com', password: 'password')
     current_user.links.create!(title: 'y combinator', url: 'https://news.ycombinator.com/', read: false)
     current_user.links.create!(title: 'turing', url: 'http://turing.io', read: true)
