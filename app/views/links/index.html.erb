@@ -31,14 +31,14 @@
                 <%= link_to link.url, link.url %>
               </td>
               <% if link.read %>
-                <td>
+                <td class='read-status'>
                   Read
-                  <button type="btn btn-info" name="button" data-link-id='<%= link.id %>'>Mark as Unread</button>
+                  <button class="btn btn-info mark-as-read" name="button" data-link-id='<%= link.id %>'>Mark as Unread</button>
                 </td>
               <% else %>
-                <td>
+                <td class='read-status'>
                   Unread
-                  <button type="btn btn-info" name="button" data-link-id='<%= link.id %>'>Mark as Read</button>
+                  <button class="btn btn-info mark-as-read" name="button" data-link-id='<%= link.id %>'>Mark as Read</button>
                 </td>
               <% end %>
               <td><%= link_to 'Edit', edit_link_path(link) %></td>
