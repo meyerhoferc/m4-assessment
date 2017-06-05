@@ -8,7 +8,7 @@ describe 'Links API' do
       expect(link.read).to eq(false)
       expect(Link.count).to eq(1)
 
-      patch "/api/v1/links/#{link.id}", {read: true}
+      patch "/api/v1/links/#{link.id}", params: {read: true}
       expect(response).to be_success
       expect(Link.count).to eq(1)
 
