@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'user can mark link as unread', :js => :true do
-  it 'for a read link' do
+  xit 'for a read link' do
     current_user = User.create!(email: 'example@email.com', password: 'password')
     link = current_user.links.create!(title: 'my first link', url: 'https://news.ycombinator.com/', read: true)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
