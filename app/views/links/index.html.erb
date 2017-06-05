@@ -14,10 +14,15 @@
 
       <%= f.submit 'Submit URL', class: 'btn btn-success' %>
     <% end %>
+    <hr>
+    <form>
+      <label for="">Search Links</label>
+      <input type="text" name="text" id='search'>
+    </form>
 
     <button class="btn btn-info show-read" name="button">Show Read</button>
     <button class="btn btn-info show-unread" name="button">Show Unread</button>
-
+    <hr>
     <div class="links">
       <table class='table table-striped'>
         <thead>
@@ -29,7 +34,7 @@
         <tbody>
           <% @links.each do |link| %>
             <tr id='link-<%= link.id %>'>
-              <td><%= link.title %></td>
+              <td class='title'><%= link.title %></td>
               <% if link.read %>
                 <td>
                   <%= link_to link.url, link.url, class: 'link read-link' %>
