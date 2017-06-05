@@ -25,15 +25,25 @@
         </thead>
         <tbody>
           <% @links.each do |link| %>
-            <tr>
+            <tr id='link-<%= link.id %>'>
               <td><%= link.title %></td>
               <td>
                 <%= link_to link.url, link.url %>
               </td>
               <% if link.read %>
-                <td>Read</td>
+                <td>
+                  <p class='read-status'>
+                    Read
+                  </p>
+                  <button class="btn btn-info mark-as-unread" name="button" data-link-id='<%= link.id %>'>Mark as Unread</button>
+                </td>
               <% else %>
-                <td>Unread</td>
+                <td>
+                  <p class='read-status'>
+                    Unread
+                  </p>
+                  <button class="btn btn-info mark-as-read" name="button" data-link-id='<%= link.id %>'>Mark as Read</button>
+                </td>
               <% end %>
               <td><%= link_to 'Edit', edit_link_path(link) %></td>
             </tr>

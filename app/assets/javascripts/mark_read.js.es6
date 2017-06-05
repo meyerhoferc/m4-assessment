@@ -1,23 +1,48 @@
 $( document ).ready(function(){
   $("body").on("click", ".mark-as-read", markAsRead)
+  $("body").on("click", ".mark-as-unread", markAsUnread)
 })
 
 function markAsRead(e) {
   e.preventDefault();
 
-  var $link = $(this).parents('.link');
+  var $link = $(this);
   var linkId = $link.data('link-id');
 
   $.ajax({
     type: "PATCH",
     url: "/api/v1/links/" + linkId,
     data: { read: true },
-  }).then(updateLinkStatus)
+  }).then(updateLinkToBeReadText(linkId))
     .fail(displayFailure);
 }
 
-function updateLinkStatus(link) {
-  $(`.link[data-link-id=${link.id}]`).find(".read-status").text(link.read);
+function markAsUnread(e) {
+  e.preventDefault();
+
+  var $link = $(this);
+  var linkId = $link.data('link-id');
+
+  $.ajax({
+    type: "PATCH",
+    url: "/api/v1/links/" + linkId,
+    data: { read: false },
+  }).then(updateLinkToBeUnreadText(linkId))
+    .fail(displayFailure);
+}
+
+function updateLinkToBeReadText(linkId) {
+  $(`#link-${linkId}`).find(".read-status").text('Read');
+  $(`#link-${linkId}`).find("button").html(`Mark as Unread`);
+  $(`#link-${linkId}`).find("button").removeClass('mark-as-read');
+  $(`#link-${linkId}`).find("button").addClass('mark-as-unread');
+}
+
+function updateLinkToBeUnreadText(linkId) {
+  $(`#link-${linkId}`).find(".read-status").text('Unread');
+  $(`#link-${linkId}`).find("button").html(`Mark as Read`);
+  $(`#link-${linkId}`).find("button").removeClass('mark-as-unread');
+  $(`#link-${linkId}`).find("button").addClass('mark-as-read');
 }
 
 function displayFailure(failureData){
