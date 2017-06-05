@@ -36,6 +36,8 @@ function updateLinkToBeReadText(linkId) {
   $(`#link-${linkId}`).find("button").html(`Mark as Unread`);
   $(`#link-${linkId}`).find("button").removeClass('mark-as-read');
   $(`#link-${linkId}`).find("button").addClass('mark-as-unread');
+  $(`#link-${linkId}`).find('.link').removeClass('unread-link');
+  $(`#link-${linkId}`).find('.link').addClass('read-link');
 }
 
 function updateLinkToBeUnreadText(linkId) {
@@ -43,6 +45,8 @@ function updateLinkToBeUnreadText(linkId) {
   $(`#link-${linkId}`).find("button").html(`Mark as Read`);
   $(`#link-${linkId}`).find("button").removeClass('mark-as-unread');
   $(`#link-${linkId}`).find("button").addClass('mark-as-read');
+  $(`#link-${linkId}`).find('.link').removeClass('read-link');
+  $(`#link-${linkId}`).find('.link').addClass('unread-link');
 }
 
 function displayFailure(failureData){

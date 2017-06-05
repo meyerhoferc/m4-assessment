@@ -27,9 +27,16 @@
           <% @links.each do |link| %>
             <tr id='link-<%= link.id %>'>
               <td><%= link.title %></td>
-              <td>
-                <%= link_to link.url, link.url %>
-              </td>
+              <% if link.read %>
+                <td>
+                  <%= link_to link.url, link.url, class: 'link read-link' %>
+                </td>
+              <% else %>
+                <td>
+                  <%= link_to link.url, link.url, class: 'link unread-link' %>
+                </td>
+              <% end %>
+
               <% if link.read %>
                 <td>
                   <p class='read-status'>

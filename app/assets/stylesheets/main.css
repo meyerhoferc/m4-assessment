@@ -1,0 +1,7 @@
+.read-link {
+  text-decoration: line-through;
+}
+
+.unread-link {
+  text-decoration: none;
+}
