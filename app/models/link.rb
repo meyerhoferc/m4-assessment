@@ -17,15 +17,13 @@ class Link < ActiveRecord::Base
     hotreads = hotreads.map do |link|
       link["url"]
     end
-    hot_links = []
-    links.each do |link|
+
+    hot_links = links.map do |link|
       if link.url.in?(hotreads)
-        hot_links << ['hot', link]
+        ['hot', link]
       else
-        # byebug
-        hot_links << [nil, link]
+        [nil, link]
       end
     end
-    hot_links
   end
 end
