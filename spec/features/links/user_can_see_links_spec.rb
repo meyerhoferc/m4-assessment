@@ -26,4 +26,22 @@ describe 'a user visits the root path' do
       expect(page).to have_link('http://kaggle.com')
     end
   end
+
+  it 'they see hot links also' do
+    user = User.create!(email: 'email@email.com', password: 'password')
+    github_link = user.links.create!(title: 'github', url: 'http://github.com')
+    taco_link = user.links.create!(title: 'tacos are good', url: 'http://taco.com')
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+    allow_any_instance_of(HotreadsService).to receive(:top_ten).and_return({url: 'http://github.com'})
+
+    visit root_path
+
+    within("link-#{github_link.id}") do
+      expect(page).to have_content('so hot right now')
+    end
+
+    within("link-#{taco_link.id}") do
+      expect(page).to_not have_content('so hot right now')
+    end
+  end
 end
