@@ -36,8 +36,6 @@ describe 'a user visits the root path' do
 
       visit root_path
 
-      save_and_open_page
-
       within("#link-#{github_link.id}") do
         expect(page).to have_content('so hot right now')
       end
