@@ -1,8 +1,7 @@
 $( document ).ready(function(){
-  $("body").on("click", ".mark-as-read", markAsRead)
-  $("body").on("click", ".mark-as-unread", markAsUnread)
-  // get current hot reads to mark them as HOT AF
-})
+  $("body").on("click", ".mark-as-read", markAsRead);
+  $("body").on("click", ".mark-as-unread", markAsUnread);
+});
 
 function markAsRead(e) {
   e.preventDefault();
