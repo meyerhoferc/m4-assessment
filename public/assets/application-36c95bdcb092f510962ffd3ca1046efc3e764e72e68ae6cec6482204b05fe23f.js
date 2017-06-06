@@ -11562,31 +11562,108 @@ return jQuery;
   }
 
 })( jQuery );
+'use strict';
+
+$(document).ready(function () {
+  $('#search').on('keyup', filterSearchResults);
+});
+
+function filterSearchResults(event) {
+  event.preventDefault();
+  var text = $('#search').val().toLowerCase();
+  var allTitles = $('.title');
+  allTitles.each(function (row) {
+    var title = $(this).text().toLowerCase();
+    var currentRow = $(this).parents('tr');
+    var url = currentRow.find('.link').text().toLowerCase();
+    if (!title.includes(text) || !url.includes(text)) {
+      currentRow.addClass('hidden');
+    };
+  });
+};
 "use strict";
 
 $(document).ready(function () {
   $("body").on("click", ".mark-as-read", markAsRead);
+  $("body").on("click", ".mark-as-unread", markAsUnread);
 });
 
 function markAsRead(e) {
   e.preventDefault();
 
-  var $link = $(this).parents('.link');
+  var $link = $(this);
+  var linkId = $link.data('link-id');
+  var link = $(this).parents('tr').find('.link').text();
+  $.ajax({
+    type: "PATCH",
+    url: "/api/v1/links/" + linkId,
+    data: { read: true }
+  }).then(updateLinkToBeReadText(linkId)).then(increaseHotReadCount(link)).fail(displayFailure);
+};
+
+function increaseHotReadCount(link) {
+  $.ajax({
+    type: 'POST',
+    url: 'https://desolate-crag-20501.herokuapp.com/api/v1/links',
+    data: { url: link }
+  });
+};
+
+function markAsUnread(e) {
+  e.preventDefault();
+
+  var $link = $(this);
   var linkId = $link.data('link-id');
 
   $.ajax({
     type: "PATCH",
     url: "/api/v1/links/" + linkId,
-    data: { read: true }
-  }).then(updateLinkStatus).fail(displayFailure);
+    data: { read: false }
+  }).then(updateLinkToBeUnreadText(linkId)).fail(displayFailure);
 }
 
-function updateLinkStatus(link) {
-  $(".link[data-link-id=" + link.id + "]").find(".read-status").text(link.read);
+function updateLinkToBeReadText(linkId) {
+  $("#link-" + linkId).find(".read-status").text('Read');
+  $("#link-" + linkId).find("button").html("Mark as Unread");
+  $("#link-" + linkId).find("button").removeClass('mark-as-read');
+  $("#link-" + linkId).find("button").addClass('mark-as-unread');
+  $("#link-" + linkId).find('.link').removeClass('unread-link');
+  $("#link-" + linkId).find('.link').addClass('read-link');
+}
+
+function updateLinkToBeUnreadText(linkId) {
+  $("#link-" + linkId).find(".read-status").text('Unread');
+  $("#link-" + linkId).find("button").html("Mark as Read");
+  $("#link-" + linkId).find("button").removeClass('mark-as-unread');
+  $("#link-" + linkId).find("button").addClass('mark-as-read');
+  $("#link-" + linkId).find('.link').removeClass('read-link');
+  $("#link-" + linkId).find('.link').addClass('unread-link');
 }
 
 function displayFailure(failureData) {
   console.log("FAILED attempt to update Link: " + failureData.responseText);
+};
+'use strict';
+
+$(document).ready(function () {
+  $('.show-read').on('click', showReadLinks);
+});
+
+function showReadLinks(event) {
+  event.preventDefault();
+  $('.unread-link').parents('tr').addClass('hidden');
+  $('.read-link').parents('tr').removeClass('hidden');
+};
+'use strict';
+
+$(document).ready(function () {
+  $('.show-unread').on('click', showUnreadLinks);
+});
+
+function showUnreadLinks(event) {
+  event.preventDefault();
+  $('.read-link').parents('tr').addClass('hidden');
+  $('.unread-link').parents('tr').removeClass('hidden');
 };
 // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
