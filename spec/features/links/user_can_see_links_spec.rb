@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'a user visits the root path' do
-  it 'they can only see their own links' do
+  xit 'they can only see their own links' do
     user = User.create!(email: 'email@email.com', password: 'password')
     user.links.create!(title: 'other user link', url: 'http://google.com')
     user.links.create!(title: 'tacos are good', url: 'http://taco.com')
@@ -28,20 +28,23 @@ describe 'a user visits the root path' do
   end
 
   it 'they see hot links also' do
-    user = User.create!(email: 'email@email.com', password: 'password')
-    github_link = user.links.create!(title: 'github', url: 'http://github.com')
-    taco_link = user.links.create!(title: 'tacos are good', url: 'http://taco.com')
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
-    allow_any_instance_of(HotreadsService).to receive(:top_ten).and_return({url: 'http://github.com'})
+    VCR.use_cassette('links/view-all') do
+      user = User.create!(email: 'email@email.com', password: 'password')
+      github_link = user.links.create!(title: 'github', url: 'http://github.com')
+      taco_link = user.links.create!(title: 'tacos are good', url: 'http://taco.com')
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
-    visit root_path
+      visit root_path
 
-    within("link-#{github_link.id}") do
-      expect(page).to have_content('so hot right now')
-    end
+      save_and_open_page
 
-    within("link-#{taco_link.id}") do
-      expect(page).to_not have_content('so hot right now')
+      within("#link-#{github_link.id}") do
+        expect(page).to have_content('so hot right now')
+      end
+
+      within("#link-#{taco_link.id}") do
+        expect(page).to_not have_content('so hot right now')
+      end
     end
   end
 end

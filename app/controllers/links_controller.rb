@@ -4,7 +4,7 @@ class LinksController < ApplicationController
       redirect_to authenticate_path
     else
       @link = Link.new
-      @links = Link.where(user_id: current_user.id)
+      @links = Link.current_links(current_user)
     end
   end
 
