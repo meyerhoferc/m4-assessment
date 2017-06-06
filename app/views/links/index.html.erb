@@ -33,34 +33,40 @@
         </thead>
         <tbody>
           <% @links.each do |link| %>
-            <tr id='link-<%= link.id %>'>
-              <td class='title'><%= link.title %></td>
-              <% if link.read %>
+            <tr id='link-<%= link[1].id %>'>
+              <td class='title'><%= link[1].title %></td>
+              <% if link[1].read %>
                 <td>
-                  <%= link_to link.url, link.url, class: 'link read-link' %>
+                  <% if link[0] == 'hot' %>
+                    <h5>so hot right now</h5>
+                  <% end %>
+                  <%= link_to link[1].url, link[1].url, class: 'link read-link' %>
                 </td>
               <% else %>
                 <td>
-                  <%= link_to link.url, link.url, class: 'link unread-link' %>
+                  <% if link[0] == 'hot' %>
+                    <h5>so hot right now</h5>
+                  <% end %>
+                  <%= link_to link[1].url, link[1].url, class: 'link unread-link' %>
                 </td>
               <% end %>
 
-              <% if link.read %>
+              <% if link[1].read %>
                 <td>
                   <p class='read-status'>
                     Read
                   </p>
-                  <button class="btn btn-info mark-as-unread" name="button" data-link-id='<%= link.id %>'>Mark as Unread</button>
+                  <button class="btn btn-info mark-as-unread" name="button" data-link-id='<%= link[1].id %>'>Mark as Unread</button>
                 </td>
               <% else %>
                 <td>
                   <p class='read-status'>
                     Unread
                   </p>
-                  <button class="btn btn-info mark-as-read" name="button" data-link-id='<%= link.id %>'>Mark as Read</button>
+                  <button class="btn btn-info mark-as-read" name="button" data-link-id='<%= link[1].id %>'>Mark as Read</button>
                 </td>
               <% end %>
-              <td><%= link_to 'Edit', edit_link_path(link) %></td>
+              <td><%= link_to 'Edit', edit_link_path(link[1]) %></td>
             </tr>
           <% end %>
         </tbody>

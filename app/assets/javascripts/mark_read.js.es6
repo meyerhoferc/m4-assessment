@@ -1,21 +1,30 @@
 $( document ).ready(function(){
-  $("body").on("click", ".mark-as-read", markAsRead)
-  $("body").on("click", ".mark-as-unread", markAsUnread)
-})
+  $("body").on("click", ".mark-as-read", markAsRead);
+  $("body").on("click", ".mark-as-unread", markAsUnread);
+});
 
 function markAsRead(e) {
   e.preventDefault();
 
   var $link = $(this);
   var linkId = $link.data('link-id');
-
+  var link = $(this).parents('tr').find('.link').text()
   $.ajax({
     type: "PATCH",
     url: "/api/v1/links/" + linkId,
     data: { read: true },
   }).then(updateLinkToBeReadText(linkId))
+    .then(increaseHotReadCount(link))
     .fail(displayFailure);
-}
+};
+
+function increaseHotReadCount(link) {
+  $.ajax({
+    type: 'POST',
+    url: 'https://desolate-crag-20501.herokuapp.com/api/v1/links',
+    data: {url: link}
+  });
+};
 
 function markAsUnread(e) {
   e.preventDefault();
